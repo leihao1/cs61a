@@ -1,3 +1,3 @@
-# cs61a
-homeworks and labs of cs61a
+# cs61a-SICP
 
+homeworks & labs & projects
