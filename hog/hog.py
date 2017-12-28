@@ -23,7 +23,15 @@ def roll_dice(num_rolls, dice=six_sided):
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
     # END PROBLEM 1
-
+    sum_points=0
+    pigout=False
+    while num_rolls >0:
+        dice_num=dice()
+        if dice_num==1:
+            pigout=True
+        sum_points+=dice_num
+        num_rolls-=1
+    return 1 if pigout else sum_points
 
 def free_bacon(score):
     """Return the points scored from rolling 0 dice (Free Bacon)."""
