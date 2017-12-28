@@ -60,6 +60,8 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert opponent_score < 100, 'The game should be over.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
+    return free_bacon(opponent_score) if num_rolls==0 else roll_dice(num_rolls,dice)
+
     # END PROBLEM 3
 
 
@@ -67,6 +69,7 @@ def is_swap(score0, score1):
     """Return whether one of the scores is an integer multiple of the other."""
     # BEGIN PROBLEM 4
     "*** YOUR CODE HERE ***"
+    return score0>1 and score1>1 and (score0%score1==0 or score1%score0==0)
     # END PROBLEM 4
 
 
