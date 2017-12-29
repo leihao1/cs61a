@@ -111,18 +111,16 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     "*** YOUR CODE HERE ***"
    
     while score0 <goal and score1<goal:
-        score0+=take_turn(strategy0(score0,score1),score1,dice)
+        if player==0:
+            score0+=take_turn(strategy0(score0,score1),score1,dice)
+        else:
+            score1+=take_turn(strategy1(score1,score0),score0,dice)
+
         if is_swap(score0,score1):
             score0,score1=score1,score0
         if score0>=goal or score1>=goal:
             return score0,score1
-        
-        score1+=take_turn(strategy1(score1,score0),score0,dice)
-        if is_swap(score0,score1):
-            score0,score1=score1,score0
-        if score1>=goal or score0>=goal:
-            return score0,score1
-       
+        player=other(player) 
     # END PROBLEM 5
     return score0, score1
 
