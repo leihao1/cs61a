@@ -11,12 +11,11 @@ test = {
           ...     print(s0, s1)
           ...     return echo
           >>> s0, s1 = play(always_roll(0), always_roll(0), goal=2, say=echo)
-          46384f1b91067efe2db7061edf72cafa
-          3270ccc2d8e87b5fea4628d2c594dae7
-          # locked
+          1 0
+          1 2
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""
@@ -29,14 +28,13 @@ test = {
           ...     print(s0, s1)
           ...     return total
           >>> s0, s1 = play(always_roll(0), always_roll(0), goal=7, say=echo)
-          46384f1b91067efe2db7061edf72cafa
-          16e2cf37e8254529473d9e0a36b75fcb
-          b2e4d14a8333b08801b894f7f3f9f3d8
-          872dbe4a4fe5d8451aa842c21194c866
-          # locked
+          1 0
+          3
+          2 4
+          9
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         }
       ],
       'scored': True,
@@ -58,12 +56,11 @@ test = {
           ...     print('**', s1)
           ...     return echo_1
           >>> s0, s1 = play(always_roll(0), always_roll(0), goal=1, say=both(echo_0, echo_1))
-          ef8fa39d05cae48a27c2f160ddf666f0
-          4a64fe964dc771a219ed773c3a146c75
-          # locked
+          * 1
+          ** 0
           """,
           'hidden': False,
-          'locked': True
+          'locked': False
         },
         {
           'code': r"""

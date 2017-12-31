@@ -109,15 +109,17 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     player = 0  # Which player is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
-   
+
     while score0 <goal and score1<goal:
         if player==0:
             score0+=take_turn(strategy0(score0,score1),score1,dice)
         else:
             score1+=take_turn(strategy1(score1,score0),score0,dice)
-
         if is_swap(score0,score1):
             score0,score1=score1,score0
+
+        say=say(score0,score1)
+
         if score0>=goal or score1>=goal:
             return score0,score1
         player=other(player) 
@@ -177,6 +179,9 @@ def both(f, g):
     """
     # BEGIN PROBLEM 6
     "*** YOUR CODE HERE ***"
+    def new(s0,s1):
+        return both(f(s0,s1),g(s0,s1))
+    return new
     # END PROBLEM 6
 
 
