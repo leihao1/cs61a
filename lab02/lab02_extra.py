@@ -30,6 +30,15 @@ def count_cond(condition):
     8
     """
     "*** YOUR CODE HERE ***"
+    def num_of_factor(n):
+        i,count=1,0
+        while i<=n:
+            if condition(n,i):
+                count+=1
+            i+=1
+        return count
+    return num_of_factor
+
 
 def cycle(f1, f2, f3):
     """Returns a function that is itself a higher-order function.
@@ -58,3 +67,17 @@ def cycle(f1, f2, f3):
     19
     """
     "*** YOUR CODE HERE ***"
+    def make_cycler(n):
+        def cycler(x):
+            i,cal=1,x
+            while i<=n:
+                if i%3==1:
+                    cal=f1(cal)
+                if i%3==2:
+                    cal=f2(cal)
+                if i%3==0:
+                    cal=f3(cal)
+                i+=1
+            return cal
+        return cycler
+    return make_cycler
