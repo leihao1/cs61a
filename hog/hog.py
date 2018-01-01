@@ -36,7 +36,7 @@ def roll_dice(num_rolls, dice=six_sided):
     # END PROBLEM 1
 def free_bacon(score):
     """Return the points scored from rolling 0 dice (Free Bacon)."""
-    assert score < 100, 'The game should be over.'
+    assert score < GOAL_SCORE, 'The game should be over.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
     if score<10:
@@ -57,7 +57,7 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     assert type(num_rolls) == int, 'num_rolls must be an integer.'
     assert num_rolls >= 0, 'Cannot roll a negative number of dice in take_turn.'
     assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
-    assert opponent_score < 100, 'The game should be over.'
+    assert opponent_score < GOAL_SCORE, 'The game should be over.'
     # BEGIN PROBLEM 3
     "*** YOUR CODE HERE ***"
     return free_bacon(opponent_score) if num_rolls==0 else roll_dice(num_rolls,dice)
@@ -71,7 +71,6 @@ def is_swap(score0, score1):
     "*** YOUR CODE HERE ***"
     return score0>1 and score1>1 and (score0%score1==0 or score1%score0==0)
     # END PROBLEM 4
-
 
 def other(player):
     """Return the other player, for a player PLAYER numbered 0 or 1.
@@ -246,7 +245,7 @@ def always_roll(n):
     return strategy
 
 
-def make_averaged(fn, num_samples=1000):
+def make_averaged(fn, num_samples=2000):
     """Return a function that returns the average_value of FN when called.
 
     To implement this function, you will have to use *args syntax, a new Python
@@ -272,7 +271,7 @@ def make_averaged(fn, num_samples=1000):
     # END PROBLEM 8
 
 
-def max_scoring_num_rolls(dice=six_sided, num_samples=1000):
+def max_scoring_num_rolls(dice=six_sided, num_samples=2000):
     """Return the number of dice (1 to 10) that gives the highest average turn
     score by calling roll_dice with the provided DICE over NUM_SAMPLES times.
     Assume that the dice always return positive outcomes.
@@ -319,20 +318,20 @@ def average_win_rate(strategy, baseline=always_roll(4)):
 
 def run_experiments():
     """Run a series of strategy experiments and report results."""
-    if True:  # Change to False when done finding max_scoring_num_rolls
+    if False:  # Change to False when done finding max_scoring_num_rolls
         six_sided_max = max_scoring_num_rolls(six_sided)
         print('Max scoring num rolls for six-sided dice:', six_sided_max)
 
-    if False:  # Change to True to test always_roll(8)
+    if True:  # Change to True to test always_roll(8)
         print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
 
-    if False:  # Change to True to test bacon_strategy
+    if True:  # Change to True to test bacon_strategy
         print('bacon_strategy win rate:', average_win_rate(bacon_strategy))
 
-    if False:  # Change to True to test swap_strategy
+    if True:  # Change to True to test swap_strategy
         print('swap_strategy win rate:', average_win_rate(swap_strategy))
 
-    if False:  # Change to True to test final_strategy
+    if True:  # Change to True to test final_strategy
         print('final_strategy win rate:', average_win_rate(final_strategy))
 
     "*** You may add additional experiments as you wish ***"
@@ -343,7 +342,9 @@ def bacon_strategy(score, opponent_score, margin=8, num_rolls=4):
     rolls NUM_ROLLS otherwise.
     """
     # BEGIN PROBLEM 10
-    return 4  # Replace this statement
+    if free_bacon(opponent_score)>=margin:
+        return 0
+    return num_rolls
     # END PROBLEM 10
 
 
@@ -353,17 +354,59 @@ def swap_strategy(score, opponent_score, margin=8, num_rolls=4):
     NUM_ROLLS.
     """
     # BEGIN PROBLEM 11
-    return 4  # Replace this statement
+    zero_dice=free_bacon(opponent_score)
+    new_score=zero_dice+score
+    if zero_dice>=margin:
+        return 0
+    elif is_swap(new_score,opponent_score):
+        return 0
+    return num_rolls
+
     # END PROBLEM 11
 
 
 def final_strategy(score, opponent_score):
     """Write a brief description of your final strategy.
-
-    *** YOUR DESCRIPTION HERE ***
+    if I am in the lead :
+        1.avoid swap if my score+1 will swap with opponent ->use free bacon
+        2.check whether I can win by rolling 0,1,2 dices
+        3.check whether free bacon > margin points
+        4.rolling 4 dices
+    if I am behind opponent:
+        1.check swap
+        2.check whether opponent might be win by using free bacon
+        eg.my score=33,opponent=95,if we get 1 point this trun ,we already lose
+        2.rolling 6 dices
     """
     # BEGIN PROBLEM 12
-    return 4  # Replace this statement
+    if score>opponent_score:
+        if is_swap(score+free_bacon(opponent_score),opponent_score):
+            if 100-score <=6 or is_swap(score+1,opponent_score):
+                return 1
+            elif 100-score<=12:
+                return 2
+            else:
+                return 4
+        else:
+            if free_bacon(opponent_score)>=8:
+                return 0
+            elif score+2*free_bacon(opponent_score)>=GOAL_SCORE:
+                return 0
+            else:
+                return 4
+    else:
+        if GOAL_SCORE<=100:
+            return 6
+        else:
+            if score+free_bacon(opponent_score)>=GOAL_SCORE:
+                return 0
+            elif is_swap(score+free_bacon(opponent_score),opponent_score):
+                return 0
+            elif free_bacon(opponent_score)>8:
+                return 0
+            else:
+                return swap_strategy(score,opponent_score,8,6)
+   
     # END PROBLEM 12
 
 
