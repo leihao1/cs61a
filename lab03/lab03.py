@@ -9,6 +9,9 @@ def ab_plus_c(a, b, c):
     2
     """
     "*** YOUR CODE HERE ***"
+    if b==0:
+        return c
+    return a+ab_plus_c(a,b-1,c)
 
 def gcd(a, b):
     """Returns the greatest common divisor of a and b.
@@ -24,6 +27,10 @@ def gcd(a, b):
     40
     """
     "*** YOUR CODE HERE ***"
+    a,b=max(a,b),min(a,b)
+    if a%b==0:
+        return b
+    return gcd(min(a,b),max(a,b)%min(a,b))
 
 def hailstone(n):
     """Print out the hailstone sequence starting at n, and return the
@@ -41,3 +48,12 @@ def hailstone(n):
     7
     """
     "*** YOUR CODE HERE ***"
+    if n==1:
+        print(1)
+        return 1
+    else:
+        print(n)
+        if n%2==0:
+            return 1+hailstone(n//2)
+        else:
+            return 1+hailstone(n*3+1)
