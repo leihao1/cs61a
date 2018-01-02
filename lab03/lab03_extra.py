@@ -15,9 +15,9 @@ def is_palindrome(n):
     True
     """
     x, y = n, 0
-    f = lambda: _____
+    f = lambda: 10*y+x%10
     while x > 0:
-        x, y = _____, f()
+        x, y =x//10, f()
     return y == n
 
 def skip_mul(n):
@@ -28,8 +28,8 @@ def skip_mul(n):
     >>> skip_mul(8) # 8 * 6 * 4 * 2
     384
     """
-    if n == 2:
-        return 2
+    if n <=2:
+        return n
     else:
         return n * skip_mul(n - 2)
 
@@ -45,6 +45,9 @@ def count_up(n):
     """
     def counter(i):
         "*** YOUR CODE HERE ***"
+        if i<=n:
+            print(i)
+            counter(i+1)
     counter(1)
 
 def is_prime(n):
@@ -58,6 +61,18 @@ def is_prime(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    if n==2:
+        return True
+    def helper(k):
+        if n%k==0:
+            return False
+        elif k*k>=n:
+            return True
+        else:
+            return helper(k+1)
+    return helper(2)
+
+    
 
 def interleaved_sum(n, odd_term, even_term):
     """Compute the sum odd_term(1) + even_term(2) + odd_term(3) + ..., up
@@ -68,6 +83,17 @@ def interleaved_sum(n, odd_term, even_term):
     29
     """
     "*** YOUR CODE HERE ***"
+    def helper(i):
+        if i==1:
+            return odd_term(i)
+        else:
+            if i%2==0:
+                this_term=even_term(i)
+            else:
+                this_term=odd_term(i)
+            return this_term+helper(i-1)
+    return helper(n)
+
 
 def ten_pairs(n):
     """Return the number of ten-pairs within positive integer n.
@@ -80,3 +106,15 @@ def ten_pairs(n):
     6
     """
     "*** YOUR CODE HERE ***"
+    if n<19:
+        return 0
+    else:
+        return check_last_digit(n//10,n%10)+ten_pairs(n//10)
+def check_last_digit(n,digit):
+    if n==0:
+        return 0
+    else:
+        if n%10+digit==10:
+            return 1+check_last_digit(n//10,digit)
+        else:
+            return check_last_digit(n//10,digit)
