@@ -1,3 +1,3 @@
 Project 1: The Game of Hog
 
-https://cs61a.org/proj/hog/
+https://inst.eecs.berkeley.edu/~cs61a/fa17/proj/hog/
